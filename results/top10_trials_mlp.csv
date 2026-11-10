@@ -1,0 +1,11 @@
+params_optimizer,number,value,user_attrs_best_epoch,user_attrs_conv_epoch,user_attrs_conv_time,user_attrs_train_time,s_per_epoch,user_attrs_n_params,params_n_layers,params_activation,params_dropout,params_weight_decay,params_batch_size,params_normalization,params_ngram_range,params_max_features
+adam,63,0.7649,10,8,0.4396,0.8048,0.0537,2562708,1,relu,0.7,0.0,512,lemmatize,1gram,20000
+adam,61,0.764,12,10,0.5166,0.8702,0.0512,2562708,1,relu,0.6,0.0,512,lemmatize,1gram,20000
+adam,46,0.764,6,6,2.2377,4.0663,0.3697,20501524,1,relu,0.5,0.0,512,none,1gram,20000
+rmsprop,60,0.7631,10,8,11.9667,22.4205,1.4947,41003028,1,elu,0.2,0.0,128,none,1gram,20000
+adam,37,0.7631,13,12,0.6856,0.9983,0.0555,2562708,1,tanh,0.4,0.0,512,lemmatize,1gram,20000
+rmsprop,65,0.7627,14,11,16.4637,28.4342,1.4965,41003028,1,elu,0.2,0.0,128,none,1gram,20000
+adam,50,0.7627,12,8,0.4184,0.8749,0.0515,2562708,1,relu,0.6,0.0,512,lemmatize,1gram,20000
+adam,58,0.7627,5,4,0.7568,1.8643,0.1864,10250772,1,relu,0.3,0.0,512,none,1gram,20000
+rmsprop,48,0.7623,6,4,5.9711,16.4417,1.4947,41003028,1,leaky_relu,0.1,0.0,128,none,1gram,20000
+rmsprop,59,0.7623,6,4,5.9924,16.4577,1.4962,41003028,1,elu,0.2,0.0,128,none,1gram,20000

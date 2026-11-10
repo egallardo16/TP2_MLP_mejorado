@@ -1,0 +1,5 @@
+,test_acc,test_acc,test_macro_F1,test_macro_F1,train_acc final,train_acc final,tiempo entrenamiento (s),tiempo entrenamiento (s),s/época,s/época
+,mean,std,mean,std,mean,std,mean,std,mean,std
+modelo,,,,,,,,,,
+MLP,0.7033,0.0013,0.6943,0.0013,0.9204,0.0015,0.8312,0.0129,0.0831,0.0013
+Softmax,0.6837,0.0005,0.6735,0.0005,0.9622,0.0003,3.2003,0.509,0.2909,0.0463

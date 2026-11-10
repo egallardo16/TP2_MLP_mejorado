@@ -1,0 +1,24 @@
+{
+  "hidden_units": [
+    64,
+    64,
+    64
+  ],
+  "activation": "relu",
+  "optimizer": "adam",
+  "lr": 0.001,
+  "batch_size": 64,
+  "epochs": 20,
+  "dropout": 0.0,
+  "weight_decay": 0.0,
+  "preprocessing": {
+    "remove_stopwords": true,
+    "normalization": "lemmatize",
+    "ngram_range": "1gram",
+    "max_features": 20000,
+    "min_df": 1
+  },
+  "train_acc": 0.9721577726218097,
+  "val_acc": 0.5930181175430844,
+  "n_params": 1289684
+}

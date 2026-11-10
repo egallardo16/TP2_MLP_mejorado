@@ -1,0 +1,4 @@
+variante,mejor val_acc,época de convergencia,tiempo hasta converger (s),s/época,gap train-val final,diverge
+adam (lr=4.4e-03),0.7627 ± 0.0016,8.0 ± 0.0,0.45 ± 0.03,0.053 ± 0.002,0.2236 ± 0.0011,False
+rmsprop (lr=8.5e-05),0.7611 ± 0.0015,7.7 ± 0.5,11.44 ± 0.70,1.498 ± 0.012,0.2464 ± 0.0009,False
+sgd (lr=3.2e-01),0.7072 ± 0.0045,10.7 ± 1.2,1.79 ± 0.18,0.169 ± 0.003,0.2712 ± 0.0023,False

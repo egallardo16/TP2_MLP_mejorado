@@ -1,0 +1,5 @@
+optimizador,trials,completos,podados,tiempo real de podados (s),tiempo estimado sin poda (s),ahorro (s),ahorro (%)
+adam,67,46,21,16.5,52.1,35.6,68.4
+rmsprop,67,53,14,10.3,28.6,18.3,63.9
+sgd,67,46,21,17.2,58.1,40.9,70.4
+total,201,145,56,44.0,138.8,94.8,68.3

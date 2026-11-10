@@ -1,0 +1,4 @@
+semilla del sampler,trials por optimizador,mejor val_acc,mejor val_acc (primeros 30 trials),optimizador,capas,unidades,activación,dropout,batch_size,max_features,ngram_range,val_acc por optimizador
+42,67,0.7649138311975254,0.7485638532920902,adam,1,"(128,)",relu,0.7,512,20000,1gram,"{'adam': 0.7649, 'rmsprop': 0.7631, 'sgd': 0.7123}"
+123,30,0.728678745028723,0.728678745028723,adam,2,"(2048, 128)",selu,0.1,512,20000,1_2gram,"{'adam': 0.7287, 'rmsprop': 0.726, 'sgd': 0.7269}"
+2024,30,0.7631462660185594,0.7631462660185594,rmsprop,1,"(128,)",tanh,0.1,128,20000,1gram,"{'adam': 0.7521, 'rmsprop': 0.7631, 'sgd': 0.696}"
