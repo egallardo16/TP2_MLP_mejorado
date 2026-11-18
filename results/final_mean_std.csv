@@ -1,5 +1,5 @@
-,test_acc,test_acc,test_macro_F1,test_macro_F1,train_acc final,train_acc final,tiempo entrenamiento (s),tiempo entrenamiento (s),s/época,s/época
-,mean,std,mean,std,mean,std,mean,std,mean,std
-modelo,,,,,,,,,,
-MLP,0.7033,0.0013,0.6943,0.0013,0.9204,0.0015,0.8312,0.0129,0.0831,0.0013
-Softmax,0.6837,0.0005,0.6735,0.0005,0.9622,0.0003,3.2003,0.509,0.2909,0.0463
+,test_acc,test_acc,test_macro_F1,test_macro_F1,train_acc (modo eval),train_acc (modo eval),gap train − test,gap train − test,tiempo entrenamiento (s),tiempo entrenamiento (s),s/época,s/época
+,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std
+modelo,,,,,,,,,,,,
+MLP,0.7033,0.0013,0.6943,0.0013,0.9577,0.0006,0.2544,0.0009,0.9099,0.0985,0.091,0.0098
+Softmax,0.6837,0.0005,0.6735,0.0005,0.9639,0.0002,0.2801,0.0004,3.7862,1.2852,0.3442,0.1168
