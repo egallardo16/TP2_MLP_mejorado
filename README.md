@@ -12,9 +12,14 @@ Trabajo práctico de Redes Neuronales. Extiende la **regresión softmax** a un *
 | `requirements.txt` | Dependencias de Python (las mismas que usa el TP3). |
 | `README.md` | Este archivo. |
 | `results/` | Resultados en CSV del notebook (grilla de overfitting, trials y pruning de los estudios, resúmenes por hiperparámetro, ablaciones, resultados finales por semilla, etc.), las bases de los estudios de Optuna (`optuna_*.db`) y `overfit_config.json`. |
+
+## Archivos y carpetas generadas al correr el notebook
+
+| Archivo | Descripción |
+|---|---|
 | `runs/` | Logs de TensorBoard de cada entrenamiento. Se visualizan con `tensorboard --logdir runs`. |
 | `mlflow.db` | Base SQLite de MLflow con el experimento `mlp_20newsgroups`: hiperparámetros, métricas por época y tiempos. Se explora con `mlflow ui --backend-store-uri sqlite:///mlflow.db`. |
-| `mlruns/` | Modelos registrados por MLflow en el entrenamiento final (si se incluye en el repo). |
+| `mlruns/` | Modelos registrados por MLflow en el entrenamiento final |
 
 ## Entorno de ejecución
 
