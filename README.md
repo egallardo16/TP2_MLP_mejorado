@@ -2,24 +2,40 @@
 
 Trabajo práctico de Redes Neuronales. Extiende la **regresión softmax** a un **MLP** (capas ocultas + no linealidades) sobre vectores TF-IDF del dataset *20 Newsgroups* (~18.000 posts de Usenet, 20 categorías). El MLP y el modelo lineal se comparan bajo exactamente el mismo protocolo: mismo preprocesamiento, mismo espacio de búsqueda, mismo número de trials, mismas semillas y mismo hardware.
 
-> Este notebook también genera el archivo `overfit_config.json` que se usa como punto de partida en el TP3 (regularización). Ver la sección [Relación con el TP3](#relación-con-el-tp3).
+> Este notebook también genera el archivo `overfit_config.json`, que se usa como punto de partida en el TP3 (regularización). Ver la sección [Relación con el TP3](#relación-con-el-tp3).
 
 ## Contenido del repositorio
 
 | Archivo | Descripción |
 |---|---|
-| `TP2_MLP.ipynb` | Notebook con todo el trabajo (código, experimentos, análisis y conclusiones). |
-| `requirements.txt` | Dependencias de Python (las mismas que usa el TP3). |
+| `TP2_MLP.ipynb` | Notebook con todo el trabajo (código, experimentos, análisis y conclusiones), ejecutado de punta a punta. |
+| `requirements.txt` | Dependencias de Python con sus versiones (las mismas que usa el TP3). |
 | `README.md` | Este archivo. |
-| `results/` | Resultados en CSV del notebook (grilla de overfitting, trials y pruning de los estudios, resúmenes por hiperparámetro, ablaciones, resultados finales por semilla, etc.), las bases de los estudios de Optuna (`optuna_*.db`) y `overfit_config.json`. |
+| `.gitignore` | Excluye archivos que no deben versionarse (`.DS_Store`, checkpoints de Jupyter, etc.). |
+| `results/` | Resultados en CSV (grilla de overfitting, trials y pruning de los estudios, resúmenes por hiperparámetro, ablaciones, resultados finales por semilla, McNemar y bootstrap, etc.), las bases de los estudios de Optuna (`optuna_*.db`) y `overfit_config.json`. |
 
-## Archivos y carpetas generadas al correr el notebook
+## Artefactos de seguimiento (`artefactos_mlp.zip`)
 
-| Archivo | Descripción |
+Los logs de TensorBoard, la base de MLflow y los modelos registrados son numerosos y pesados, por lo que se distribuyen comprimidos en `artefactos_mlp.zip`. Este archivo lo genera la sección 15 del notebook y contiene:
+
+| Contenido del zip | Descripción |
 |---|---|
-| `runs/` | Logs de TensorBoard de cada entrenamiento. Se visualizan con `tensorboard --logdir runs`. |
-| `mlflow.db` | Base SQLite de MLflow con el experimento `mlp_20newsgroups`: hiperparámetros, métricas por época y tiempos. Se explora con `mlflow ui --backend-store-uri sqlite:///mlflow.db`. |
-| `mlruns/` | Modelos registrados por MLflow en el entrenamiento final |
+| `runs/` | Logs de TensorBoard de cada entrenamiento (un directorio por trial, por experimento de un factor por vez y por entrenamiento final). |
+| `mlflow.db` | Base SQLite de MLflow con el experimento `mlp_20newsgroups`: hiperparámetros, métricas por época y tiempos de cada run, anidados bajo cada búsqueda. |
+| `mlruns/` | Modelos registrados por MLflow en el entrenamiento final. |
+| `results/` | Copia de las tablas CSV, las bases de Optuna y `overfit_config.json`. |
+
+Para explorarlos, descomprimir el zip en la raíz del repositorio y ejecutar:
+
+```bash
+unzip artefactos_mlp.zip
+
+# Curvas de aprendizaje de todos los entrenamientos
+tensorboard --logdir runs
+
+# Parámetros, métricas y tiempos de cada run
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+```
 
 ## Entorno de ejecución
 
@@ -62,7 +78,7 @@ La primera celda (`!pip install -q optuna mlflow`) puede omitirse si ya se insta
 
 | Sección | Qué hace |
 |---|---|
-| **0. Setup** | Instalación de dependencias, importaciones, semillas, detección de GPU y backend de MLflow. |
+| **0. Setup** | Instalación de dependencias, importaciones, semillas, detección de GPU y backend de MLflow. Tabla de herramientas utilizadas y por qué se eligió cada una. |
 | **1. Datos** | Carga de las particiones oficiales train/test de 20 Newsgroups (sin encabezados, firmas ni citas). El test no se usa en la búsqueda. |
 | **2. Preprocesamiento** | Tokenización configurable: minúsculas, stopwords, stemming o lematización. |
 | **3. Vectorización** | TF-IDF con rango de n-gramas, `max_features` y `min_df` configurables, ajustado solo con train. |
@@ -72,12 +88,12 @@ La primera celda (`!pip install -q optuna mlflow`) puede omitirse si ya se insta
 | **7. Experimento de overfitting** | Grilla de 1, 2 y 3 capas × 64, 256 y 1024 neuronas, sin regularización, para encontrar la configuración **más chica que sobreajusta**. Guarda el resultado en `overfit_config.json`. |
 | **8. Entrenamiento final** | Entrena el mejor MLP con todo el train y lo evalúa en el test real. |
 | **9. Evaluación final** | Accuracy, `classification_report`, matriz de confusión y confusiones más frecuentes entre clases. |
-| **10. Baseline softmax** | Regresión softmax con el mismo protocolo, espacio de búsqueda, presupuesto, semilla y hardware. |
-| **11. Análisis de la búsqueda** | Pruning y tiempo ahorrado, mejor trial, efecto del `lr` por optimizador, rendimiento y tiempos por grupo, vectorización, chequeo de bordes del espacio e importancia de hiperparámetros (fANOVA). |
+| **10. Baseline softmax** | Regresión softmax con el mismo protocolo, espacio de búsqueda, presupuesto, semilla y hardware. Incluye el diagnóstico de sesgo y varianza. |
+| **11. Análisis de la búsqueda** | Pruning y tiempo ahorrado, mejores trials, efecto del `lr` por optimizador, rendimiento y tiempos por grupo, vectorización, chequeo de bordes del espacio e importancia de hiperparámetros (fANOVA). |
 | **12. Efecto de cada hiperparámetro** | Experimentos de un factor por vez desde la mejor configuración (3 semillas): `lr`, `batch_size`, vectorización y optimizador. |
-| **13. Multi-semilla y robustez** | Comparación softmax vs MLP con 5 semillas (con test t pareado) y repetición de la búsqueda con otras semillas del sampler. |
+| **13. Multi-semilla y robustez** | Comparación softmax vs MLP con 5 semillas (test t pareado, McNemar exacto y bootstrap sobre los documentos de test) y repetición de la búsqueda con otras semillas del sampler. |
 | **14. Conclusiones** | Resultados, búsqueda y pruning, efecto de cada hiperparámetro, overfitting, robustez y limitaciones. |
-| **15. Exportación** | Guarda las tablas finales y genera `artefactos_mlp.zip` con `results/`, `runs/`, `mlruns/` y `mlflow.db`. |
+| **15. Exportación** | Guarda las tablas finales y genera `artefactos_mlp.zip`. |
 
 ## Resultados principales
 
@@ -90,14 +106,15 @@ Evaluación en el test oficial, media ± desvío entre 5 semillas:
 | Parámetros | 400.020 | 2.562.708 |
 | Mejor `val_acc` de la búsqueda | 0.7556 | 0.7649 |
 
-- El MLP supera al softmax por unos 2 puntos de accuracy, de forma consistente en las 5 semillas (t pareado = 30,05).
-- El mejor MLP es una red de **una capa de 128 unidades** con `dropout = 0.7`, Adam, `batch_size = 512` y 20.000 características: una arquitectura chica y muy regularizada.
+- El MLP supera al softmax por unos 2 puntos de accuracy, de forma consistente en las 5 semillas (t pareado = 30,05). La diferencia se sostiene también frente al error de muestreo del test (McNemar y bootstrap).
+- El mejor MLP tiene una única capa oculta de 128 unidades, con `dropout = 0.7`, Adam, `batch_size = 512` y 20.000 características.
 - Adam y RMSprop rinden parecido en validación (0.7649 y 0.7631); SGD queda unos 5 puntos por debajo.
 - El pruning cortó el 36 % de los trials del MLP.
+- Ambos modelos son de **alta varianza**: el error de entrenamiento está cerca del mínimo posible y casi todo el error de test se debe a la brecha entre entrenamiento y test.
 - Más detalle (por clase, tiempos, efecto de cada hiperparámetro y limitaciones) en la sección 14 del notebook.
 
 ## Relación con el TP3
 
 La sección 7 busca la configuración más chica que sobreajusta el problema y la guarda en `results/overfit_config.json`. Con el criterio usado (`train_acc ≥ 0.97` y `val_loss` final al menos 1,5 veces su mínimo), esa configuración es una red de **3 capas × 64 neuronas** (1.289.684 parámetros), con ReLU, Adam, `lr = 1e-3` y `batch_size = 64`, sin dropout ni weight decay.
 
-Ese archivo es la entrada del **TP3 (regularización)**, que estudia cómo L1, L2, dropout y Batch Normalization cambian el comportamiento de esa red. El `overfit_config.json` del TP3 proviene de una nueva corrida de este notebook, aplicando las recomendaciones y correcciones generales de clase (varias semillas, medición de tiempos, etc.).
+Ese archivo es la entrada del **TP3 (regularización)**, que estudia cómo L1, L2, dropout y Batch Normalization cambian el comportamiento de esa red. El TP3 parte del `overfit_config.json` generado por este notebook.
